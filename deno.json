@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "start": "deno run -A githooks.ts",
+    "check": "deno fmt --check && deno lint"
+  },
+  "githooks": {
+    "pre-commit": ["check"]
+  }
+}
