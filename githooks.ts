@@ -13,7 +13,6 @@ type DenoConfig = {
 };
 
 const denoConfig = await readJson("./deno.json") as DenoConfig;
-console.log(denoConfig);
 
 const hooks = Object.keys(denoConfig.githooks);
 
