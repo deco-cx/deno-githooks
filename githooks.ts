@@ -39,7 +39,8 @@ export async function setupGithooks(opts: GithooksOptions = defaultOptions) {
       const task = config.githooks[hook];
       const hookPath = `./.git/hooks/${hook}`;
       const hookScript = `#!/bin/sh
-      exec deno task ${task}`;
+exec deno task ${task}
+`;
       await Deno.writeTextFile(hookPath, hookScript);
       await Deno.chmod(hookPath, 0o755);
     }
