@@ -42,7 +42,9 @@ export async function setupGithooks(opts: GithooksOptions = defaultOptions) {
 exec deno task ${task}
 `;
       await Deno.writeTextFile(hookPath, hookScript);
-      await Deno.chmod(hookPath, 0o755);
+      if (os.platform() !== "windows") {
+        await Deno.chmod(hookPath, 0o755);
+      }
     }
     opts.verbose &&
       console.log("Githooks setup successfully:", hooks.join(", "));
