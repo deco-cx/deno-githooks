@@ -36,7 +36,7 @@ That's it. Now your git should call `deno task check` before every commit.
 
 ---
 
-**PROTIP:** [**deco** Live](https://github.com/deco-cx/live) projects come with
+**PROTIP:** [**deco** Live](https://github.com/deco-cx/live.ts) projects come with
 this extension pre-installed in the `dev` script. You don't have to do anything,
 just add `githooks` to `deno.json` and run `dev` to install the hooks
 transparently.
