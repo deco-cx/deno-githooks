@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "denoland.vscode-deno",
-    "stackbreak.comment-divider"
+    "denoland.vscode-deno"
   ]
 }
