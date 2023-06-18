@@ -1,0 +1,121 @@
+{
+  "$id": "https://deno.land/x/githooks/schema.json",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "applypatch-msg": {
+      "type": "string"
+    },
+    "pre-applypatch": {
+      "type": "string"
+    },
+    "post-applypatch": {
+      "type": "string"
+    },
+    "pre-commit": {
+      "type": "string"
+    },
+    "pre-merge-commit": {
+      "type": "string"
+    },
+    "prepare-commit-msg": {
+      "type": "string"
+    },
+    "commit-msg": {
+      "type": "string"
+    },
+    "post-commit": {
+      "type": "string"
+    },
+    "pre-rebase": {
+      "type": "string"
+    },
+    "post-checkout": {
+      "type": "string"
+    },
+    "post-merge": {
+      "type": "string"
+    },
+    "pre-push": {
+      "type": "string"
+    },
+    "pre-receive": {
+      "type": "string"
+    },
+    "update": {
+      "type": "string"
+    },
+    "proc-receive": {
+      "type": "string"
+    },
+    "post-receive": {
+      "type": "string"
+    },
+    "post-update": {
+      "type": "string"
+    },
+    "reference-transaction": {
+      "type": "string"
+    },
+    "push-to-checkout": {
+      "type": "string"
+    },
+    "pre-auto-gc": {
+      "type": "string"
+    },
+    "post-rewrite": {
+      "type": "string"
+    },
+    "sendemail-validate": {
+      "type": "string"
+    },
+    "fsmonitor-watchman": {
+      "type": "string"
+    },
+    "p4-changelist": {
+      "type": "string"
+    },
+    "p4-prepare-changelist": {
+      "type": "string"
+    },
+    "p4-post-changelist": {
+      "type": "string"
+    },
+    "p4-pre-submit": {
+      "type": "string"
+    },
+    "post-index-change": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "applypatch-msg",
+    "pre-applypatch",
+    "post-applypatch",
+    "pre-commit",
+    "pre-merge-commit",
+    "prepare-commit-msg",
+    "commit-msg",
+    "post-commit",
+    "pre-rebase",
+    "post-checkout",
+    "post-merge",
+    "pre-push",
+    "pre-receive",
+    "update",
+    "proc-receive",
+    "post-receive",
+    "post-update",
+    "reference-transaction",
+    "push-to-checkout",
+    "pre-auto-gc",
+    "post-rewrite",
+    "sendemail-validate",
+    "fsmonitor-watchman",
+    "p4-changelist",
+    "p4-prepare-changelist",
+    "p4-post-changelist",
+    "p4-pre-submit",
+    "post-index-change"
+  ]
+}
