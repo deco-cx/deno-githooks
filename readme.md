@@ -1,49 +1,63 @@
-# Deno support for githooks
+## githooks for Deno
 
-See https://git-scm.com/docs/githooks and
-https://deno.land/manual@v1.25.4/tools/task_runner
-
-This is a simple tool for [deno](https://deno.land) projects that allows you to
-associate specific `deno tasks` with specific `githooks` by extending the native
-`deno.json` configuration file.
+This is a simple tool for [Deno](https://deno.land) projects that allows you to
+associate specific [deno tasks](https://deno.land/manual/tools/task_runner) with
+specific [Git Hooks](https://git-scm.com/docs/githooks) by extending the native
+`deno.json` configuration file or adding a separate one.
 
 It works like this:
 
-- In your `deno.json` file, add a `githooks` key containing a map of `{githook}`
-  to `{deno task}`. For example:
+1. In your `deno.json` (or `deno.jsonc`) file, add a `githooks` key containing a
+   map of `{githook}` to `{deno task}`. For example:
 
-```json
-// deno.json
-{
-  "tasks": {
-    "start": "deno run -A dev.ts",
-    "check": "deno fmt --check && deno lint"
-  },
-  "githooks": {
-    "pre-commit": "check"
-  }
-}
-```
+   ```json
+   {
+     "tasks": {
+       "start": "deno run -A dev.ts",
+       "check": "deno fmt --check && deno lint"
+     },
+     "githooks": {
+       "pre-commit": "check"
+     }
+   }
+   ```
 
-- In your terminal, run the `githooks.ts` script. It will automatically create a
-  hook file for each githook in your `deno.json` file.
+   You can also create a separate `githooks.json`, `githooks.jsonc`,
+   `githooks.yaml` or `githooks.yml` file:
 
-```bash
-$ deno run -A -r https://deno.land/x/githooks/githooks.ts
-```
+   ```json
+   {
+     "pre-commit": "check"
+   }
+   ```
 
-That's it. Now your git should call `deno task check` before every commit.
+   ```yaml
+   pre-commit: check
+   ```
+
+   To add autocompletion, you can use our JSON schema. This schema can either be
+   specified in the settings of your code editor or directly in the JSON file:
+
+   ```json
+   {
+     "$schema": "https://deno.land/x/githooks/schema.json",
+     "pre-commit": "check"
+   }
+   ```
+
+2. In your terminal, run the `githooks.ts` script. It will automatically create
+   a hook file for each githook in your `deno.json` file.
+
+   ```bash
+   deno run -A -r https://deno.land/x/githooks/githooks.ts
+   ```
+
+That's it. Now your Git Hook should call `deno task check` before every commit.
 
 ---
 
-**PROTIP:** [**deco** Live](https://github.com/deco-cx/live.ts) projects come with
-this extension pre-installed in the `dev` script. You don't have to do anything,
-just add `githooks` to `deno.json` and run `dev` to install the hooks
-transparently.
+**PROTIP:** [**deco**](https://github.com/deco-cx/deco) projects come with this
+extension pre-installed in the `dev` script. You don't have to do anything, just
+add `githooks` to `deno.json` and run `dev` to install the hooks transparently.
 
 ---
-
-## TODO
-
-- [ ] Add support for Windows implementing something like this:
-      https://github.com/denoland/deno/blob/429759fe8b4207240709c240a8344d12a1e39566/cli/tools/installer.rs#L46
