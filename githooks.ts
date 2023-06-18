@@ -1,5 +1,3 @@
-import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
-
 export type Githooks = {
   githooks: Record<string, string[]>;
 };
@@ -12,9 +10,11 @@ export type GithooksOptions = {
 export async function readJson(filePath: string): Promise<unknown> {
   try {
     const jsonString = await Deno.readTextFile(filePath);
+
     return JSON.parse(jsonString);
   } catch (err) {
     err.message = `${filePath}: ${err.message}`;
+
     throw err;
   }
 }
@@ -40,14 +40,15 @@ export async function setupGithooks(opts: GithooksOptions = defaultOptions) {
     for (const hook of hooks) {
       const task = config.githooks[hook];
       const hookPath = `./.git/hooks/${hook}`;
-      const hookScript = `#!/bin/sh
-exec deno task ${task}
-`;
+      const hookScript = `#!/bin/sh\nexec deno task ${task}`;
+
       await Deno.writeTextFile(hookPath, hookScript);
-      if (os.platform() !== "windows") {
+
+      if (Deno.build.os !== "windows") {
         await Deno.chmod(hookPath, 0o755);
       }
     }
+
     opts.verbose &&
       console.log("Githooks setup successfully:", hooks.join(", "));
   }
