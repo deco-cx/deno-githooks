@@ -18,22 +18,20 @@ async function findFile(
   ...paths: ConfigFile[]
 ): Promise<
   | Record<string, string>
-  | {
-    githooks: Record<string, string>;
-    [rest: string]: unknown;
-  }
   | undefined
 > {
   try {
     const content = await Deno.readTextFile(paths[0]);
 
-    if (paths[0].endsWith(".json")) {
-      return JSON.parse(content);
-    } else if (paths[0].endsWith(".jsonc")) {
-      return jsonc.parse(content) as Record<string, string>;
-    } else {
-      return yaml.parse(content) as Record<string, string>;
-    }
+    const parsedContent = paths[0].endsWith(".json")
+      ? JSON.parse(content)
+      : paths[0].endsWith(".jsonc")
+      ? jsonc.parse(content) as Record<string, string>
+      : yaml.parse(content) as Record<string, string>;
+
+    return paths[0].endsWith("deno.json") || paths[0].endsWith("deno.jsonc")
+      ? (parsedContent.githooks ? parsedContent.githooks : undefined)
+      : parsedContent;
   } catch (_) {
     paths.shift();
 
@@ -52,7 +50,7 @@ export async function setup({
   file?: ConfigFile;
   verbose?: boolean;
 } = {}) {
-  const content = file ? await findFile(file) : await findFile(
+  const githooks = file ? await findFile(file) : await findFile(
     "./githooks.json",
     "./githooks.jsonc",
     "./githooks.yaml",
@@ -61,15 +59,10 @@ export async function setup({
     "./deno.jsonc",
   );
 
-  if (!content) {
+  if (!githooks) {
     return verbose &&
       console.error(brightRed("No githooks found!"));
   }
-
-  const githooks = (content.githooks ? content.githooks : content) as Record<
-    string,
-    string
-  >;
 
   const hooks = Object.keys(githooks);
 
