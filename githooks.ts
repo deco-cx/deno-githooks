@@ -69,7 +69,9 @@ export async function setup({
   for (const h of hooks) {
     const task = githooks[h];
     const hookPath = `./.git/hooks/${h}`;
-    const hookScript = `#!/bin/sh\nexec deno task ${task}`;
+    const hookScript = `#!/bin/sh\nexec ${
+      task.startsWith("deno") ? task : `deno task ${task}`
+    }`;
 
     await Deno.writeTextFile(hookPath, hookScript);
 
